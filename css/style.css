@@ -1,0 +1,6 @@
+.game_board{
+    border: 1px solid black;
+    display: block;
+    background-image: url("../images/background.png");
+    margin: 0 auto;
+}
