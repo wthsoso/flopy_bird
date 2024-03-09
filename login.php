@@ -5,14 +5,11 @@ session_start();
 if (isset($_POST['username'])) {
     $username = $_REQUEST['username'];
     $password = ($_REQUEST['password']);
-
     $query = "SELECT * FROM `users` WHERE `username`='$username' AND `password`='$password'";
     $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
     $rows = mysqli_num_rows($result);
-
     if ($rows == 1) {
         $user_data = mysqli_fetch_assoc($result);
-
         $_SESSION['user_id'] = $user_data['id']; 
         header("Location: index.php");
     } else {

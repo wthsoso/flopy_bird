@@ -1,4 +1,4 @@
-<?php 
+<?php
 header("Content-Type:application/json");
 require('db.php');
 
@@ -8,22 +8,23 @@ $data = json_decode($json);
 if ($data) {
     $user_id = $data->user_id;
     $score = $data->score;
-
-    $stmt = $conn->prepare("INSERT INTO `scores` (`user_id`, `score`) VALUES (?, ?)");
-    $stmt->bind_param("ii", $user_id, $score);
-
-    
-    if ($stmt->execute()) {
-        response(true);
-    } else {
-        response(false);
+    if ($score > 0) {
+        $stmt = $conn->prepare("INSERT INTO `scores` (`user_id`, `score`) VALUES (?, ?)");
+        $stmt->bind_param("ii", $user_id, $score);
+        if ($stmt->execute()) {
+            response(true);
+            return;
+        } 
+        $stmt->close();
+        $conn->close();
     }
-   
-    $stmt->close();
-    $conn->close();
-} else {
+
+    response(false);
+} else{
     response(false);
 }
+
+
 
 function response($status)
 {
@@ -31,4 +32,3 @@ function response($status)
     $json_response = json_encode($response);
     echo $json_response;
 }
-?>

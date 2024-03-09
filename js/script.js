@@ -46,6 +46,10 @@ async function getHighScore() {
 }
 
 async function saveScore(score) {
+    if(score == 0){
+        return;
+        
+    }
     console.log('save save')
     const data = {
         user_id: userID, 
@@ -196,3 +200,5 @@ function collision(a, b) {
         a.y < b.y + b.height &&
         a.y + a.height > b.y;
 }
+
+
